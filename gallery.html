@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery – Jamie Hilz Hats &amp; Things</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container nav-wrapper">
+        <h1 class="site-title">Jamie Hilz Hats &amp; Things</h1>
+        <nav class="main-nav">
+          <a href="index.html#about">About</a>
+          <a href="gallery.html" class="active">Gallery</a>
+          <a href="index.html#order">Custom&nbsp;Order</a>
+          <a href="index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <section id="gallery-page">
+      <div class="container">
+        <h2>Gallery</h2>
+        <p class="gallery-intro">Browse our collection of bespoke hats and fascinators. Upload your own images to see how your creations could look in the gallery.</p>
+        <!-- Upload control for adding images dynamically -->
+        <label for="gallery-upload" class="upload-label">Add your own images</label>
+        <input type="file" id="gallery-upload" multiple accept="image/*" />
+        <div id="gallery-grid-full" class="gallery-grid">
+          <!-- Populate the gallery with all images by default -->
+          <img src="assets/img/image1.jpg" alt="Hat design 1" />
+          <img src="assets/img/image2.jpg" alt="Hat design 2" />
+          <img src="assets/img/image3.jpg" alt="Hat design 3" />
+          <img src="assets/img/image4.jpg" alt="Hat design 4" />
+          <img src="assets/img/image5.jpg" alt="Hat design 5" />
+          <img src="assets/img/image6.jpg" alt="Hat design 6" />
+          <img src="assets/img/image7.jpg" alt="Hat design 7" />
+          <img src="assets/img/image8.jpg" alt="Hat design 8" />
+          <img src="assets/img/image9.jpg" alt="Hat design 9" />
+          <img src="assets/img/image10.jpg" alt="Hat design 10" />
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>© 2025 Jamie Hilz Hats &amp; Things. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Handle dynamic uploads on the gallery page.  When a user selects
+      // images using the file input, create image elements and append them
+      // to the gallery grid.  Images are not persisted to the server, but
+      // this gives visitors an interactive way to visualise their own
+      // designs or inspiration.
+      const galleryUpload = document.getElementById('gallery-upload');
+      const galleryGridFull = document.getElementById('gallery-grid-full');
+      if (galleryUpload) {
+        galleryUpload.addEventListener('change', (event) => {
+          const files = event.target.files;
+          Array.from(files).forEach((file) => {
+            if (!file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.alt = file.name;
+              galleryGridFull.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          });
+          // Clear the input so the same files can be reselected if desired
+          event.target.value = '';
+        });
+      }
+    </script>
+  </body>
+</html>

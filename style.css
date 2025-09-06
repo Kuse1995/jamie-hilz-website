@@ -77,32 +77,33 @@ header {
  */
 #hero {
   position: relative;
+  /* Use the composite header image created by the user for the hero */
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url('assets/img/image8.jpg');
+    url('assets/img/header.png');
   background-size: cover;
-  /* Align the background to the top centre so the hat sits above the fold */
-  background-position: top center;
+  background-position: center;
   color: #ffffff;
   text-align: center;
-  padding: 6rem 1rem;
+  /* Increase padding to allow the full collage to breathe */
+  padding: 7rem 1rem;
 }
 
 /* Override hero styles when a background image is applied */
 /* When a hero section also has the `.hero-image` class, override the gradient */
 .hero-image {
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url('assets/img/image8.jpg');
+    url('assets/img/header.png');
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   color: #ffffff;
 }
 
 /* Increase specificity so the image overrides the default hero background */
 #hero.hero-image {
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-    url('assets/img/image8.jpg');
+    url('assets/img/header.png');
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   color: #ffffff;
 }
 
@@ -169,6 +170,31 @@ h2 {
 .gallery-grid img:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Gallery page styles */
+.gallery-intro {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.upload-label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--color-accent);
+}
+
+#gallery-upload {
+  margin-bottom: 1.5rem;
+}
+
+/* Centre the call-to-action button underneath the home gallery */
+.gallery-link {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 /* Form styles */

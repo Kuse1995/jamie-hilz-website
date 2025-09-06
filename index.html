@@ -1,157 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jamie Hilz Hats &amp; Things</title>
-    <!-- Link to the main stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Primary navigation and branding -->
-    <header>
-      <div class="container nav-wrapper">
-        <h1 class="site-title">Jamie Hilz Hats &amp; Things</h1>
-        <nav class="main-nav">
-          <a href="index.html#about">About</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="#order">Custom&nbsp;Order</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Hero section with call to action -->
-    <section id="hero" class="hero-image">
-      <div class="hero-content">
-        <h2>Exquisite Custom Hats &amp; Accessories</h2>
-        <p>Experience bespoke elegance for any occasion.</p>
-        <a href="#order" class="btn">Order&nbsp;Your&nbsp;Custom&nbsp;Hat</a>
-      </div>
-    </section>
-
-    <!-- Gallery section for the home page.  Only display a curated set
-         of images here; visitors can explore the full collection on
-         the separate gallery page. -->
-    <section id="gallery">
-      <div class="container">
-        <h2>Gallery</h2>
-        <div class="gallery-grid">
-          <!-- Select a few signature looks for the home page gallery -->
-          <img src="assets/img/image1.jpg" alt="Signature hat 1" />
-          <img src="assets/img/image4.jpg" alt="Signature hat 2" />
-          <img src="assets/img/image8.jpg" alt="Signature hat 3" />
-          <img src="assets/img/image9.jpg" alt="Signature hat 4" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jamie Hilz Hats & Things — Custom Millinery</title>
+  <meta name="description" content="Bespoke hats, hatinators & hair accessories crafted with elegance. Order a custom hat for weddings, races and special occasions." />
+  <link rel="preload" as="image" href="assets/header.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/image3.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="#home">Jamie <span>Hilz</span> Hats & Things</a>
+      <button aria-label="Open menu" class="nav-toggle" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#order">Custom Order</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <section class="hero container" id="home" role="banner">
+      <div class="hero-copy">
+        <h1>Elegance, handcrafted.</h1>
+        <p>Custom hats, hatinators & hair accessories for weddings, races and life’s finest moments.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#order">Create my hat</a>
+          <a class="btn ghost" href="#gallery">Explore the gallery</a>
         </div>
-        <!-- Prompt to view the full gallery -->
-        <p class="gallery-link"><a href="gallery.html" class="btn">View&nbsp;Full&nbsp;Gallery</a></p>
+      </div>
+      <div class="hero-media">
+        <img src="assets/header.png" alt="Collage of elegant ladies wearing wide-brim hats and fascinators" />
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <h2>Signature Pieces</h2>
+          <p>A curated selection of recent work. Each piece is tailored to the client, the outfit and the occasion.</p>
+        </div>
+        <div class="masonry">
+          <figure><img src="assets/image2.jpg" alt="Wide-brim hat with contrast band, modern lounge setting"><figcaption>Modern Wide Brim</figcaption></figure>
+          <figure><img src="assets/image3.jpg" alt="Bridal fascinator with birdcage veil"><figcaption>Bridal Hatinator</figcaption></figure>
+          <figure><img src="assets/image4.jpg" alt="Blue statement hat with flowing ribbon"><figcaption>Race Day Statement</figcaption></figure>
+          <figure><img src="assets/image5.jpg" alt="Polka-dot set with matching hat"><figcaption>Polka-Dot Ensemble</figcaption></figure>
+          <figure><img src="assets/image6.jpg" alt="Textured ivory jacket with classic black hat"><figcaption>Classic Daywear</figcaption></figure>
+          <figure><img src="assets/image7.jpg" alt="Two elegant ladies in occasion wear and hats enjoying coffee"><figcaption>Social Chic</figcaption></figure>
+          <figure><img src="assets/image8.jpg" alt="Red and navy occasion wear with hats"><figcaption>Colour Pop Duo</figcaption></figure>
+          <figure><img src="assets/image9.jpg" alt="Asymmetric fascinator on pleated gown"><figcaption>Architectural Accent</figcaption></figure>
+          <figure><img src="assets/image1.jpg" alt="Wide-brim monochrome hat with blazer"><figcaption>Monochrome Minimal</figcaption></figure>
+        </div>
       </div>
     </section>
 
-    <!-- Custom order form -->
-    <section id="order">
+    <section class="section alt" id="about">
+      <div class="container split">
+        <div>
+          <h2>About the Milliner</h2>
+          <p>
+            Jamie Hilz crafts bespoke headwear that marries timeless silhouettes with modern lines — pieces that
+            elevate the outfit and photograph beautifully. Every commission begins with a conversation about your
+            event, outfit and personal style. Materials are selected for season and comfort, then shaped,
+            stitched and trimmed by hand to fit you perfectly.
+          </p>
+          <ul class="ticks">
+            <li>Custom-made hats, hatinators & hair accessories</li>
+            <li>Design consultation to match your outfit & event</li>
+            <li>Premium materials: straw, felt/wool, sinamay, veiling</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn primary" href="#order">Start your commission</a>
+          </div>
+        </div>
+        <div class="about-photo">
+          <img src="assets/image6.jpg" alt="Client wearing a classic hat at an outdoor café">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
       <div class="container">
-        <h2>Custom&nbsp;Order</h2>
-        <p>Tell us about your dream hat, and we'll bring it to life.</p>
-        <form id="order-form">
-          <label for="name">Name<span aria-hidden="true">*</span></label>
-          <input type="text" id="name" name="name" required />
+        <div class="section-head">
+          <h2>Services</h2>
+          <p>Bespoke millinery for weddings, races, church & corporate events — with options to repair or refresh cherished pieces.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <h3>Custom Millinery</h3>
+            <p>From couture fascinators to sweeping wide brims. Tailored fit, colour-matched trims, and handcrafted finishes.</p>
+          </article>
+          <article class="card">
+            <h3>Styling & Consultations</h3>
+            <p>Bring your outfit photos and we’ll co-design the perfect silhouette, proportion and shade for you.</p>
+          </article>
+          <article class="card">
+            <h3>Refresh & Repair</h3>
+            <p>Feather/flower replacements, band changes and re-blocking to restore a favourite hat.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <label for="email">Email<span aria-hidden="true">*</span></label>
-          <input type="email" id="email" name="email" required />
+    <section class="section alt" id="order">
+      <div class="container">
+        <div class="section-head">
+          <h2>Order a Custom Hat</h2>
+          <p>Answer a few quick questions. We’ll follow up with a consultation and timeline. Upload outfit photos for best matching.</p>
+        </div>
 
-          <label for="phone">Phone<span aria-hidden="true">*</span></label>
-          <input type="tel" id="phone" name="phone" required />
+        <form id="orderForm" class="order-form" novalidate>
+          <div class="grid">
+            <label>Full Name
+              <input type="text" name="name" required placeholder="Your name" />
+              <span class="error"></span>
+            </label>
+            <label>Email
+              <input type="email" name="email" required placeholder="you@example.com" />
+              <span class="error"></span>
+            </label>
+            <label>Phone / WhatsApp
+              <input type="tel" name="phone" required placeholder="+260 ..." />
+              <span class="error"></span>
+            </label>
+            <label>Event Date
+              <input type="date" name="eventDate" required />
+              <span class="error"></span>
+            </label>
+            <label>Hat Type
+              <select name="hatType" id="hatType" required>
+                <option value="">Select…</option>
+                <option>Wide Brim</option>
+                <option>Fascinator / Hatinator</option>
+                <option>Fedora</option>
+                <option>Other</option>
+              </select>
+              <span class="error"></span>
+            </label>
+            <label id="sizeField" class="conditional hidden">Head Size (cm)
+              <input type="number" name="headSize" min="50" max="65" step="0.5" placeholder="e.g., 57.5" />
+              <span class="help">Measure around your head where the hat will sit.</span>
+            </label>
+            <label>Preferred Colours
+              <input type="text" name="colours" placeholder="e.g., ivory & black, dusty pink, navy" />
+            </label>
+            <label>Materials (optional)
+              <select name="materials" multiple size="4">
+                <option>Straw / Sinamay</option>
+                <option>Wool / Felt</option>
+                <option>Veiling / Net</option>
+                <option>Feathers / Flowers</option>
+              </select>
+            </label>
+            <label class="span-2">Notes
+              <textarea name="notes" rows="4" placeholder="Tell us about your outfit, venue and any ideas you love."></textarea>
+            </label>
+          </div>
 
-          <label for="style">Hat&nbsp;Style</label>
-          <select id="style" name="style">
-            <option value="Fascinator">Fascinator</option>
-            <option value="Wide-brim">Wide-brim</option>
-            <option value="Headband">Headband</option>
-            <option value="Other">Other</option>
-          </select>
+          <div class="uploader" id="dropArea" aria-label="Upload reference photos">
+            <input type="file" id="fileInput" accept="image/*" multiple hidden />
+            <p><strong>Drag & drop</strong> outfit or inspiration photos here, or <button type="button" id="chooseBtn" class="linklike">browse</button>.</p>
+            <div id="thumbs" class="thumbs" aria-live="polite"></div>
+          </div>
 
-          <label for="details">Description / Colours / Materials</label>
-          <textarea
-            id="details"
-            name="details"
-            rows="4"
-            placeholder="Describe your ideal hat..."
-          ></textarea>
-
-          <label for="reference">Upload&nbsp;Reference&nbsp;Image</label>
-          <input
-            type="file"
-            id="reference"
-            name="reference"
-            accept="image/*"
-          />
-          <div id="preview" class="preview"></div>
-
-          <button type="submit" class="btn">Submit&nbsp;Request</button>
+          <div class="cta-row">
+            <button class="btn primary" type="submit">Create my hat</button>
+            <a class="btn ghost" href="#contact">Ask a question</a>
+          </div>
+          <p class="form-success hidden" id="successMsg">Thank you! Your request has been prepared. Please tap the email draft to send.</p>
         </form>
       </div>
     </section>
 
-    <!-- About section moved to the bottom of the home page -->
-    <section id="about">
-      <div class="container">
-        <h2>About&nbsp;Us</h2>
-        <p>
-          Jamie Hilz Hats &amp; Things specialises in exquisite customised hats,
-          hatinators and hair accessories for all your functions. Each piece is
-          crafted with care to complement your unique style and make you stand
-          out. Our designs are bespoke, elegant and timeless.
-        </p>
-      </div>
-    </section>
-
-    <!-- Testimonials section for added personality -->
-    <section id="testimonials" class="section-alt">
-      <div class="container">
-        <h2>Testimonials</h2>
-        <div class="testimonials-grid">
-          <blockquote>
-            “Always classy 👏” – happy client
-          </blockquote>
-          <blockquote>
-            “You look stunning hun 😍” – event attendee
-          </blockquote>
-          <blockquote>
-            “Timeless fashion… we are happy to be part of your journey!” – JH fan
-          </blockquote>
+    <section class="section" id="contact">
+      <div class="container split">
+        <div>
+          <h2>Contact</h2>
+          <p>For quick responses, message on WhatsApp or Instagram. Studio visits by appointment.</p>
+          <ul class="contact-list">
+            <li><a href="https://www.instagram.com/jamie_hilz_hatsandthings/" target="_blank" rel="noopener">Instagram: @jamie_hilz_hatsandthings</a></li>
+            <li><a href="https://www.instagram.com/jamiehilz_the_milliner/" target="_blank" rel="noopener">Instagram: @jamiehilz_the_milliner</a></li>
+            <li><a href="mailto:orders@jamiehilz.com?subject=Custom%20Hat%20Inquiry">Email: orders@jamiehilz.com</a></li>
+          </ul>
+        </div>
+        <div class="contact-photo">
+          <img src="assets/image1.jpg" alt="Client in monochrome wide-brim hat holding a clutch">
         </div>
       </div>
     </section>
+  </main>
 
-    <!-- Contact section -->
-    <section id="contact">
-      <div class="container">
-        <h2>Contact</h2>
-        <p>
-          Email:
-          <a href="mailto:info@jamiehilz.com" target="_blank"
-            >info@jamiehilz.com</a
-          >
-        </p>
-        <p>
-          WhatsApp:
-          <a href="tel:+260000000000" target="_blank"
-            >+260&nbsp;000&nbsp;000&nbsp;000</a
-          >
-        </p>
-      </div>
-    </section>
+  <footer class="site-footer">
+    <div class="container foot-grid">
+      <p>© <span id="year"></span> Jamie Hilz Hats & Things. All rights reserved.</p>
+      <a href="#home" class="back-to-top">Back to top ↑</a>
+    </div>
+  </footer>
 
-
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <p>© 2025 Jamie Hilz Hats &amp; Things. All rights reserved.</p>
-      </div>
-    </footer>
-
-    <!-- Link to the main script -->
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>

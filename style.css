@@ -1,0 +1,247 @@
+/*
+ * Main stylesheet for Jamie Hilz Hats & Things website.
+ * Defines colour palette, layout styles and responsive rules.
+ */
+
+/* Colour variables */
+:root {
+  --color-primary: #f5ede4; /* light beige */
+  --color-secondary: #efd5d7; /* soft pink */
+  --color-accent: #3a594c; /* dark green */
+  --color-text: #333333;
+  --color-light: #ffffff;
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-light);
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* Navigation */
+header {
+  background: var(--color-accent);
+  color: var(--color-light);
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.site-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.main-nav a {
+  color: var(--color-light);
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.main-nav a:hover {
+  opacity: 0.8;
+}
+
+/* Hero section */
+#hero {
+  position: relative;
+  /* Use a background image with a dark overlay to highlight the hats */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('assets/img/image1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 5rem 1rem;
+}
+
+/* Override hero styles when a background image is applied */
+/* When a hero section also has the `.hero-image` class, override the gradient */
+.hero-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('assets/img/image1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+}
+
+/* Increase specificity so the image overrides the default hero background */
+#hero.hero-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('assets/img/image1.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #f5f5f5;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-light);
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #2a4439;
+}
+
+/* Sections */
+section {
+  padding: 3rem 0;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--color-accent);
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--color-primary);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Form styles */
+form label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form select,
+form textarea,
+form input[type="file"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  background: var(--color-light);
+}
+
+form textarea {
+  resize: vertical;
+}
+
+.preview {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Alternate section backgrounds */
+.section-alt {
+  background: var(--color-secondary);
+}
+
+/* Testimonials */
+.testimonials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.testimonials-grid blockquote {
+  flex: 1 1 250px;
+  background: var(--color-light);
+  padding: 1rem 1.5rem;
+  border-left: 5px solid var(--color-accent);
+  border-radius: 4px;
+  font-style: italic;
+  color: var(--color-text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer */
+footer {
+  background: var(--color-accent);
+  color: var(--color-light);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .nav-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .main-nav {
+    margin-top: 0.5rem;
+  }
+}

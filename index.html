@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jamie Hilz Hats &amp; Things</title>
+    <!-- Link to the main stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Primary navigation and branding -->
+    <header>
+      <div class="container nav-wrapper">
+        <h1 class="site-title">Jamie Hilz Hats &amp; Things</h1>
+        <nav class="main-nav">
+          <a href="#about">About</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#order">Custom&nbsp;Order</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero section with call to action -->
+    <section id="hero" class="hero-image">
+      <div class="hero-content">
+        <h2>Exquisite Custom Hats &amp; Accessories</h2>
+        <p>Experience bespoke elegance for any occasion.</p>
+        <a href="#order" class="btn">Order&nbsp;Your&nbsp;Custom&nbsp;Hat</a>
+      </div>
+    </section>
+
+    <!-- About section -->
+    <section id="about">
+      <div class="container">
+        <h2>About&nbsp;Us</h2>
+        <p>
+          Jamie Hilz Hats &amp; Things specialises in exquisite customised hats,
+          hatinators and hair accessories for all your functions. Each piece is
+          crafted with care to complement your unique style and make you stand
+          out. Our designs are bespoke, elegant and timeless.
+        </p>
+      </div>
+    </section>
+
+    <!-- Gallery section -->
+    <section id="gallery">
+      <div class="container">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+          <!-- gallery images - replace or add more as needed -->
+          <img src="assets/img/image1.jpg" alt="Hat design 1" />
+          <img src="assets/img/image2.jpg" alt="Hat design 2" />
+          <img src="assets/img/image3.jpg" alt="Hat design 3" />
+          <img src="assets/img/image4.jpg" alt="Hat design 4" />
+          <img src="assets/img/image5.jpg" alt="Hat design 5" />
+          <img src="assets/img/image6.jpg" alt="Hat design 6" />
+          <img src="assets/img/image7.jpg" alt="Hat design 7" />
+          <img src="assets/img/image8.jpg" alt="Hat design 8" />
+          <img src="assets/img/image9.jpg" alt="Hat design 9" />
+          <img src="assets/img/image10.jpg" alt="Hat design 10" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom order form -->
+    <section id="order">
+      <div class="container">
+        <h2>Custom&nbsp;Order</h2>
+        <p>Tell us about your dream hat, and we'll bring it to life.</p>
+        <form id="order-form">
+          <label for="name">Name<span aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email<span aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="phone">Phone<span aria-hidden="true">*</span></label>
+          <input type="tel" id="phone" name="phone" required />
+
+          <label for="style">Hat&nbsp;Style</label>
+          <select id="style" name="style">
+            <option value="Fascinator">Fascinator</option>
+            <option value="Wide-brim">Wide-brim</option>
+            <option value="Headband">Headband</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="details">Description / Colours / Materials</label>
+          <textarea
+            id="details"
+            name="details"
+            rows="4"
+            placeholder="Describe your ideal hat..."
+          ></textarea>
+
+          <label for="reference">Upload&nbsp;Reference&nbsp;Image</label>
+          <input
+            type="file"
+            id="reference"
+            name="reference"
+            accept="image/*"
+          />
+          <div id="preview" class="preview"></div>
+
+          <button type="submit" class="btn">Submit&nbsp;Request</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Testimonials section for added personality -->
+    <section id="testimonials" class="section-alt">
+      <div class="container">
+        <h2>Testimonials</h2>
+        <div class="testimonials-grid">
+          <blockquote>
+            “Always classy 👏” – happy client
+          </blockquote>
+          <blockquote>
+            “You look stunning hun 😍” – event attendee
+          </blockquote>
+          <blockquote>
+            “Timeless fashion… we are happy to be part of your journey!” – JH fan
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact">
+      <div class="container">
+        <h2>Contact</h2>
+        <p>
+          Email:
+          <a href="mailto:info@jamiehilz.com" target="_blank"
+            >info@jamiehilz.com</a
+          >
+        </p>
+        <p>
+          WhatsApp:
+          <a href="tel:+260000000000" target="_blank"
+            >+260&nbsp;000&nbsp;000&nbsp;000</a
+          >
+        </p>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>© 2025 Jamie Hilz Hats &amp; Things. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Link to the main script -->
+    <script src="script.js"></script>
+  </body>
+</html>

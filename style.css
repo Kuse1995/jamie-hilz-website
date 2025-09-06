@@ -65,34 +65,44 @@ header {
 }
 
 /* Hero section */
+/*
+ * The hero uses a large, striking photograph of a bespoke JH hat.  We
+ * deliberately position the image from the top to ensure the hat is
+ * visible rather than cropping off the head and showing only the lower
+ * body.  A semi–transparent overlay darkens the image just enough to
+ * make the white headline text stand out while still revealing the
+ * details of the hat.  Feel free to swap out `image8.jpg` with another
+ * photo—just keep the top–centre positioning so the subject’s hat
+ * remains in view on larger screens.
+ */
 #hero {
   position: relative;
-  /* Use a background image with a dark overlay to highlight the hats */
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('assets/img/image1.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('assets/img/image8.jpg');
   background-size: cover;
-  background-position: center;
+  /* Align the background to the top centre so the hat sits above the fold */
+  background-position: top center;
   color: #ffffff;
   text-align: center;
-  padding: 5rem 1rem;
+  padding: 6rem 1rem;
 }
 
 /* Override hero styles when a background image is applied */
 /* When a hero section also has the `.hero-image` class, override the gradient */
 .hero-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('assets/img/image1.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('assets/img/image8.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   color: #ffffff;
 }
 
 /* Increase specificity so the image overrides the default hero background */
 #hero.hero-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('assets/img/image1.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('assets/img/image8.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   color: #ffffff;
 }
 

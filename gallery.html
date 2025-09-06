@@ -1,80 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery – Jamie Hilz Hats &amp; Things</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="container nav-wrapper">
-        <h1 class="site-title">Jamie Hilz Hats &amp; Things</h1>
-        <nav class="main-nav">
-          <a href="index.html#about">About</a>
-          <a href="gallery.html" class="active">Gallery</a>
-          <a href="index.html#order">Custom&nbsp;Order</a>
-          <a href="index.html#contact">Contact</a>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery — Jamie Hilz Hats & Things</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html#home">Jamie <span>Hilz</span> Hats & Things</a>
+      <ul class="nav-links" style="display:flex">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#order">Custom Order</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <section class="hero container">
+      <div class="hero-copy">
+        <h1>Gallery & Lookbooks</h1>
+        <p>Browse by occasion. Click any image to view larger.</p>
+        <div class="filters">
+          <button class="btn primary" data-filter="all">All</button>
+          <button class="btn" data-filter="bridal">Bridal</button>
+          <button class="btn" data-filter="race">Race Day</button>
+          <button class="btn" data-filter="daywear">Daywear</button>
+          <button class="btn" data-filter="couture">Couture</button>
+        </div>
       </div>
-    </header>
+      <div class="hero-media">
+        <img src="assets/header.png" alt="Hat collage">
+      </div>
+    </section>
+  </header>
 
-    <section id="gallery-page">
+  <main>
+    <section class="section">
       <div class="container">
-        <h2>Gallery</h2>
-        <p class="gallery-intro">Browse our collection of bespoke hats and fascinators. Upload your own images to see how your creations could look in the gallery.</p>
-        <!-- Upload control for adding images dynamically -->
-        <label for="gallery-upload" class="upload-label">Add your own images</label>
-        <input type="file" id="gallery-upload" multiple accept="image/*" />
-        <div id="gallery-grid-full" class="gallery-grid">
-          <!-- Populate the gallery with all images by default -->
-          <img src="assets/img/image1.jpg" alt="Hat design 1" />
-          <img src="assets/img/image2.jpg" alt="Hat design 2" />
-          <img src="assets/img/image3.jpg" alt="Hat design 3" />
-          <img src="assets/img/image4.jpg" alt="Hat design 4" />
-          <img src="assets/img/image5.jpg" alt="Hat design 5" />
-          <img src="assets/img/image6.jpg" alt="Hat design 6" />
-          <img src="assets/img/image7.jpg" alt="Hat design 7" />
-          <img src="assets/img/image8.jpg" alt="Hat design 8" />
-          <img src="assets/img/image9.jpg" alt="Hat design 9" />
-          <img src="assets/img/image10.jpg" alt="Hat design 10" />
+        <div class="masonry" id="grid">
+          <figure data-cat="daywear"><img src="assets/image2.jpg" alt="Monochrome wide brim in lounge"><figcaption>Monochrome Minimal</figcaption></figure>
+          <figure data-cat="bridal"><img src="assets/image3.jpg" alt="Bridal fascinator, birdcage veil"><figcaption>Bridal Hatinator</figcaption></figure>
+          <figure data-cat="race"><img src="assets/image4.jpg" alt="Blue statement race day hat"><figcaption>Race Day Statement</figcaption></figure>
+          <figure data-cat="couture"><img src="assets/image5.jpg" alt="Polka-dot ensemble"><figcaption>Polka-Dot Ensemble</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image6.jpg" alt="Classic daywear hat"><figcaption>Classic Daywear</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image7.jpg" alt="Coffee meetup hats"><figcaption>Social Chic</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image8.jpg" alt="Red & navy occasion wear"><figcaption>Colour Pop Duo</figcaption></figure>
+          <figure data-cat="couture"><img src="assets/image9.jpg" alt="Architectural fascinator"><figcaption>Architectural Accent</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image1.jpg" alt="Wide brim with blazer"><figcaption>Modern Wide Brim</figcaption></figure>
         </div>
       </div>
     </section>
+  </main>
 
-    <footer>
-      <div class="container">
-        <p>© 2025 Jamie Hilz Hats &amp; Things. All rights reserved.</p>
-      </div>
-    </footer>
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+    <button class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImg" alt="Expanded view"/>
+    <p id="lightboxCap"></p>
+  </div>
 
-    <script src="script.js"></script>
-    <script>
-      // Handle dynamic uploads on the gallery page.  When a user selects
-      // images using the file input, create image elements and append them
-      // to the gallery grid.  Images are not persisted to the server, but
-      // this gives visitors an interactive way to visualise their own
-      // designs or inspiration.
-      const galleryUpload = document.getElementById('gallery-upload');
-      const galleryGridFull = document.getElementById('gallery-grid-full');
-      if (galleryUpload) {
-        galleryUpload.addEventListener('change', (event) => {
-          const files = event.target.files;
-          Array.from(files).forEach((file) => {
-            if (!file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              const img = document.createElement('img');
-              img.src = e.target.result;
-              img.alt = file.name;
-              galleryGridFull.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-          });
-          // Clear the input so the same files can be reselected if desired
-          event.target.value = '';
-        });
-      }
-    </script>
-  </body>
+  <footer class="site-footer">
+    <div class="container foot-grid">
+      <p>© <span id="year"></span> Jamie Hilz Hats & Things.</p>
+      <a href="#top" class="back-to-top">Back to top ↑</a>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+  <script>
+    // Filters
+    const buttons = document.querySelectorAll('.filters .btn');
+    const grid = document.getElementById('grid');
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter;
+      grid.querySelectorAll('figure').forEach(fig => {
+        fig.style.display = (cat === 'all' || fig.dataset.cat === cat) ? '' : 'none';
+      });
+      buttons.forEach(b=>b.classList.remove('primary'));
+      btn.classList.add('primary');
+    }));
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbCap = document.getElementById('lightboxCap');
+    const lbClose = document.querySelector('.lightbox-close');
+    document.querySelectorAll('#grid figure').forEach(fig => {
+      fig.addEventListener('click', () => {
+        const img = fig.querySelector('img');
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lbCap.textContent = fig.querySelector('figcaption')?.textContent || '';
+        lightbox.classList.remove('hidden');
+      });
+    });
+    lbClose.addEventListener('click', ()=> lightbox.classList.add('hidden'));
+    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) lightbox.classList.add('hidden'); });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>

@@ -8,6 +8,15 @@
   <link rel="preload" as="image" href="assets/header.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/image3.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <meta property="og:title" content="Jamie Hilz Hats & Things — Custom Millinery">
+  <meta property="og:description" content="Bespoke hats, hatinators & hair accessories crafted with elegance.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/header.png">
+  <meta property="og:url" content="https://jamiehilz.example">
+
 </head>
 <body>
   <header class="site-header">
@@ -15,7 +24,7 @@
       <a class="brand" href="#home">Jamie <span>Hilz</span> Hats & Things</a>
       <button aria-label="Open menu" class="nav-toggle" id="navToggle">☰</button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#order">Custom Order</a></li>
@@ -38,25 +47,25 @@
   </header>
 
   <main>
-    <section class="section" id="gallery">
+    
+    <section class="section" id="gallery-teaser">
       <div class="container">
         <div class="section-head">
-          <h2>Signature Pieces</h2>
-          <p>A curated selection of recent work. Each piece is tailored to the client, the outfit and the occasion.</p>
+          <h2>Lookbook Highlights</h2>
+          <p>A glimpse at recent commissions. Explore the full <a href="gallery.html">Gallery</a> for categories and details.</p>
         </div>
         <div class="masonry">
-          <figure><img src="assets/image2.jpg" alt="Wide-brim hat with contrast band, modern lounge setting"><figcaption>Modern Wide Brim</figcaption></figure>
+          <figure><img src="assets/image2.jpg" alt="Wide-brim hat with contrast band"><figcaption>Modern Wide Brim</figcaption></figure>
           <figure><img src="assets/image3.jpg" alt="Bridal fascinator with birdcage veil"><figcaption>Bridal Hatinator</figcaption></figure>
-          <figure><img src="assets/image4.jpg" alt="Blue statement hat with flowing ribbon"><figcaption>Race Day Statement</figcaption></figure>
           <figure><img src="assets/image5.jpg" alt="Polka-dot set with matching hat"><figcaption>Polka-Dot Ensemble</figcaption></figure>
-          <figure><img src="assets/image6.jpg" alt="Textured ivory jacket with classic black hat"><figcaption>Classic Daywear</figcaption></figure>
-          <figure><img src="assets/image7.jpg" alt="Two elegant ladies in occasion wear and hats enjoying coffee"><figcaption>Social Chic</figcaption></figure>
-          <figure><img src="assets/image8.jpg" alt="Red and navy occasion wear with hats"><figcaption>Colour Pop Duo</figcaption></figure>
-          <figure><img src="assets/image9.jpg" alt="Asymmetric fascinator on pleated gown"><figcaption>Architectural Accent</figcaption></figure>
-          <figure><img src="assets/image1.jpg" alt="Wide-brim monochrome hat with blazer"><figcaption>Monochrome Minimal</figcaption></figure>
+          <figure><img src="assets/image9.jpg" alt="Asymmetric fascinator"><figcaption>Architectural Accent</figcaption></figure>
+        </div>
+        <div class="cta-row" style="justify-content:center;margin-top:12px">
+          <a class="btn primary" href="gallery.html">View full gallery</a>
         </div>
       </div>
     </section>
+
 
     <section class="section alt" id="about">
       <div class="container split">
@@ -176,7 +185,35 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
+    
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head">
+          <h2>The Process</h2>
+          <p>Every hat is handcrafted in three considered stages for a couture result.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><h3>1 · Consultation</h3><p>Share your event, outfit and inspiration. We discuss silhouette, proportion and palette.</p></article>
+          <article class="card"><h3>2 · Design & Fit</h3><p>Materials are selected for season and comfort. Blocks and trims are refined to your measurements.</p></article>
+          <article class="card"><h3>3 · Finishing Touches</h3><p>Hand‑stitched details, veiling and balance checks. Your piece is boxed and ready for the day.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <h2>Kind Words</h2>
+          <p>Discreet craftsmanship that photographs beautifully.</p>
+        </div>
+        <div class="quotes">
+          <blockquote>“The hat completed my bridal look — elegant and perfectly balanced.” <span>— Thandi, Bride</span></blockquote>
+          <blockquote>“Race‑day showstopper! Comfortable all day and complimented nonstop.” <span>— Naleli</span></blockquote>
+          <blockquote>“Jamie understood my outfit instantly and matched the tone to perfection.” <span>— Maureen</span></blockquote>
+        </div>
+      </div>
+    </section>
+<section class="section" id="contact">
       <div class="container split">
         <div>
           <h2>Contact</h2>
@@ -202,5 +239,6 @@
   </footer>
 
   <script src="script.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Store", "name": "Jamie Hilz Hats & Things", "image": "assets/header.png", "description": "Bespoke hats, hatinators & hair accessories crafted with elegance.", "url": "https://jamiehilz.example", "sameAs": ["https://www.instagram.com/jamie_hilz_hatsandthings/", "https://www.instagram.com/jamiehilz_the_milliner/"], "brand": "Jamie Hilz", "areaServed": "Zambia", "telephone": "+260", "email": "orders@jamiehilz.com"}</script>
 </body>
 </html>

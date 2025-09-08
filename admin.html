@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — Jamie Hilz Hats & Things</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .admin-wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .admin-card { background:#fff; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.06); padding:16px; margin-bottom:16px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; }
+    .row > * { flex: 1 1 260px; }
+    .table { width:100%; border-collapse: collapse; }
+    .table th, .table td { padding:10px; border-bottom:1px solid #eee; vertical-align: top; }
+    .muted { color:#666 }
+    .hidden { display:none }
+    .thumb-sm { width:80px; height:80px; object-fit:cover; border-radius:8px; }
+    .input, .select, .textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #ddd; background:#fafafa; }
+  </style>
+</head>
+<body>
+  <main class="admin-wrap">
+    <h1>Admin — Gallery Manager</h1>
+    <p class="muted">Log in to upload images and manage tags for the public gallery.</p>
+
+    <section id="authCard" class="admin-card">
+      <h2>Log In</h2>
+      <div class="row">
+        <label>Email<input class="input" id="email" type="email" placeholder="admin@example.com"></label>
+        <label>Password<input class="input" id="password" type="password" placeholder="••••••••"></label>
+      </div>
+      <div class="cta-row" style="margin-top:10px">
+        <button class="btn primary" id="loginBtn">Log in</button>
+        <button class="btn" id="logoutBtn" style="display:none">Log out</button>
+      </div>
+      <p id="authMsg" class="muted" style="margin-top:8px"></p>
+    </section>
+
+    <section id="uploaderCard" class="admin-card hidden">
+      <h2>Upload New Images</h2>
+      <div class="row">
+        <label>Caption/Title<input class="input" id="caption" placeholder="e.g., Bridal Hatinator"></label>
+        <label>Tags (comma-separated)<input class="input" id="tags" placeholder="bridal, veil, ivory"></label>
+      </div>
+      <div class="uploader" id="adminDrop">
+        <input type="file" id="files" accept="image/*" multiple hidden />
+        <p><strong>Drag & drop</strong> images here, or <button class="linklike" type="button" id="pickFiles">browse</button>.</p>
+        <div id="preview" class="thumbs"></div>
+      </div>
+      <div class="cta-row">
+        <button class="btn primary" id="uploadBtn">Upload</button>
+      </div>
+      <p id="uploadMsg" class="muted"></p>
+    </section>
+
+    <section id="listCard" class="admin-card hidden">
+      <h2>Gallery Items</h2>
+      <table class="table" id="itemsTable">
+        <thead><tr><th>Preview</th><th>Caption</th><th>Tags</th><th>Actions</th></tr></thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  
+<!-- Firebase SDKs (Compat builds for simplicity) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+</script>
+
+  <script src="admin.js"></script>
+</body>
+</html>

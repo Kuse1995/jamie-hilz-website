@@ -88,3 +88,31 @@ Notes: ${data.get('notes') || '—'}
   successMsg.classList.remove('hidden');
   window.location.href = mailto;
 });
+
+// Reference Photo Uploader
+const dArea = document.getElementById('dropArea');
+const fInput = document.getElementById('fileInput');
+const thumbs = document.getElementById('thumbs');
+const chooseBtn = document.getElementById('chooseBtn');
+if (dArea) {
+  const stop = (e)=>{e.preventDefault();e.stopPropagation();};
+  ['dragenter','dragover','dragleave','drop'].forEach(ev => dArea.addEventListener(ev, stop));
+  dArea.addEventListener('dragover', ()=> dArea.style.background='#fff');
+  dArea.addEventListener('dragleave', ()=> dArea.style.background='#fafafa');
+  dArea.addEventListener('drop', (e)=>{ dArea.style.background='#fafafa'; fInput.files = e.dataTransfer.files; renderThumbs(); });
+}
+chooseBtn?.addEventListener('click', ()=> fInput?.click());
+fInput?.addEventListener('change', renderThumbs);
+function renderThumbs(){
+  if (!thumbs || !fInput) return;
+  thumbs.innerHTML='';
+  [...fInput.files].forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    if (file.size > 8*1024*1024) { alert(file.name + ' is larger than 8MB.'); return; }
+    const img = document.createElement('img');
+    const r = new FileReader();
+    r.onload = e => img.src = e.target.result;
+    r.readAsDataURL(file);
+    thumbs.appendChild(img);
+  });
+}

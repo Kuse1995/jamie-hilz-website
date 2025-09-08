@@ -133,14 +133,12 @@ blockquote span{display:block;margin-top:10px;color:#666;font-style:normal}
   .quotes{grid-template-columns:1fr}
 }
 
-
-/* Dynamic filters & lightbox UI */
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
-.btn{display:inline-block;border-radius:999px;padding:10px 16px;border:1px solid #333;text-decoration:none;background:#fff;cursor:pointer}
-.btn.primary{background:#d9b28f;border-color:#d9b28f;color:#1d1208;font-weight:600}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;z-index:50}
-.lightbox img{max-width:90vw;max-height:70vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.lightbox p{color:white;margin-top:10px}
-.lightbox.hidden{display:none}
-.lightbox-close{position:absolute;top:14px;right:16px;font-size:28px;border:none;background:#00000088;color:#fff;border-radius:12px;padding:6px 12px;cursor:pointer}
-
+/* Smaller, faster images + uploader styling */
+.masonry{columns:1 240px; column-gap:14px}
+.masonry img{filter:saturate(.98)}
+.uploader{border:2px dashed #d9d9d9;border-radius:16px;padding:16px;text-align:center;background:#fafafa;margin:12px 0 20px}
+.linklike{background:transparent;border:none;text-decoration:underline;font:inherit;cursor:pointer}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+.thumbs img{width:90px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #eee}
+.address{margin-top:8px;color:#333}
+.address .muted{color:#777;font-size:14px}

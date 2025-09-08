@@ -59,7 +59,7 @@ function renderPreview() {
   [...filesInput.files].forEach(f => {
     if (!f.type.startsWith('image/')) return;
     const img = document.createElement('img');
-    img.style.width = '80px'; img.style.height = '80px'; img.style.objectFit = 'cover'; img.style.borderRadius='8px'; img.style.margin='4px';
+    img.style.width='80px'; img.style.height='80px'; img.style.objectFit='cover'; img.style.borderRadius='8px'; img.style.margin='4px';
     const r = new FileReader();
     r.onload = e => img.src = e.target.result;
     r.readAsDataURL(f);

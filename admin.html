@@ -68,20 +68,24 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
 <script>
 // TODO: Replace with your Firebase config
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-try { firebase.app(); } catch(e) { firebase.initializeApp(firebaseConfig); }
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
-</script>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  <script src="admin.js"></script>
-</body>
-</html>
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA2J5lgYTdIGG0zNCKKD0qaCbbwS4g1nzs",
+  authDomain: "jamiehilz.firebaseapp.com",
+  projectId: "jamiehilz",
+  storageBucket: "jamiehilz.firebasestorage.app",
+  messagingSenderId: "780433394142",
+  appId: "1:780433394142:web:6144643b652d1901a5b54f",
+  measurementId: "G-VE449G4R66"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

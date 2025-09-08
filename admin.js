@@ -25,15 +25,15 @@ auth.onAuthStateChanged(user => {
     authMsg.textContent = `Signed in as ${user.email}`;
     loginBtn.style.display = 'none';
     logoutBtn.style.display = 'inline-block';
-    uploaderCard.style.display = '';
-    listCard.style.display = '';
+    uploaderCard.classList.remove('hidden');
+    listCard.classList.remove('hidden');
     loadItems();
   } else {
     authMsg.textContent = '';
     loginBtn.style.display = 'inline-block';
     logoutBtn.style.display = 'none';
-    uploaderCard.style.display = 'none';
-    listCard.style.display = 'none';
+    uploaderCard.classList.add('hidden');
+    listCard.classList.add('hidden');
   }
 });
 
@@ -59,7 +59,7 @@ function renderPreview() {
   [...filesInput.files].forEach(f => {
     if (!f.type.startsWith('image/')) return;
     const img = document.createElement('img');
-    img.style.width='80px'; img.style.height='80px'; img.style.objectFit='cover'; img.style.borderRadius='8px'; img.style.margin='4px';
+    img.className = 'thumb-sm';
     const r = new FileReader();
     r.onload = e => img.src = e.target.result;
     r.readAsDataURL(f);
@@ -104,9 +104,9 @@ async function loadItems() {
     const d = doc.data();
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><img src="${d.url}" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:8px"></td>
-      <td><input value="${d.caption || ''}" data-field="caption" style="width:100%"></td>
-      <td><input value="${(d.tags || []).join(', ')}" data-field="tags" style="width:100%"></td>
+      <td><img class="thumb-sm" src="${d.url}" alt=""></td>
+      <td><input class="input" value="${d.caption || ''}" data-field="caption"></td>
+      <td><input class="input" value="${(d.tags || []).join(', ')}" data-field="tags"></td>
       <td>
         <button class="btn primary" data-action="save">Save</button>
         <button class="btn" data-action="delete">Delete</button>

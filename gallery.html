@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="hero-media">
-        <picture><source srcset="assets/header.webp" type="image/webp"><img src="assets/header.png" alt="Hat collage"></picture>
+        <img src="assets/header.png" alt="Hat collage">
       </div>
     </section>
   </header>
@@ -42,17 +42,16 @@
   <main>
     <section class="section">
       <div class="container">
-        <div class="filters" id="filters"></div>
-  <div class="masonry" id="grid">
-          <figure data-cat="daywear"><picture><source srcset="assets/image2.webp" type="image/webp"><img src="assets/image2.jpg" alt="Monochrome wide brim in lounge"></picture><figcaption>Monochrome Minimal</figcaption></figure>
-          <figure data-cat="bridal"><picture><source srcset="assets/image3.webp" type="image/webp"><img src="assets/image3.jpg" alt="Bridal fascinator, birdcage veil"></picture><figcaption>Bridal Hatinator</figcaption></figure>
-          <figure data-cat="race"><picture><source srcset="assets/image4.webp" type="image/webp"><img src="assets/image4.jpg" alt="Blue statement race day hat"></picture><figcaption>Race Day Statement</figcaption></figure>
-          <figure data-cat="couture"><picture><source srcset="assets/image5.webp" type="image/webp"><img src="assets/image5.jpg" alt="Polka-dot ensemble"></picture><figcaption>Polka-Dot Ensemble</figcaption></figure>
-          <figure data-cat="daywear"><picture><source srcset="assets/image6.webp" type="image/webp"><img src="assets/image6.jpg" alt="Classic daywear hat"></picture><figcaption>Classic Daywear</figcaption></figure>
-          <figure data-cat="daywear"><picture><source srcset="assets/image7.webp" type="image/webp"><img src="assets/image7.jpg" alt="Coffee meetup hats"></picture><figcaption>Social Chic</figcaption></figure>
-          <figure data-cat="daywear"><picture><source srcset="assets/image8.webp" type="image/webp"><img src="assets/image8.jpg" alt="Red & navy occasion wear"></picture><figcaption>Colour Pop Duo</figcaption></figure>
-          <figure data-cat="couture"><picture><source srcset="assets/image9.webp" type="image/webp"><img src="assets/image9.jpg" alt="Architectural fascinator"></picture><figcaption>Architectural Accent</figcaption></figure>
-          <figure data-cat="daywear"><picture><source srcset="assets/image1.webp" type="image/webp"><img src="assets/image1.jpg" alt="Wide brim with blazer"></picture><figcaption>Modern Wide Brim</figcaption></figure>
+        <div class="masonry" id="grid">
+          <figure data-cat="daywear"><img src="assets/image2.jpg" alt="Monochrome wide brim in lounge"><figcaption>Monochrome Minimal</figcaption></figure>
+          <figure data-cat="bridal"><img src="assets/image3.jpg" alt="Bridal fascinator, birdcage veil"><figcaption>Bridal Hatinator</figcaption></figure>
+          <figure data-cat="race"><img src="assets/image4.jpg" alt="Blue statement race day hat"><figcaption>Race Day Statement</figcaption></figure>
+          <figure data-cat="couture"><img src="assets/image5.jpg" alt="Polka-dot ensemble"><figcaption>Polka-Dot Ensemble</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image6.jpg" alt="Classic daywear hat"><figcaption>Classic Daywear</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image7.jpg" alt="Coffee meetup hats"><figcaption>Social Chic</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image8.jpg" alt="Red & navy occasion wear"><figcaption>Colour Pop Duo</figcaption></figure>
+          <figure data-cat="couture"><img src="assets/image9.jpg" alt="Architectural fascinator"><figcaption>Architectural Accent</figcaption></figure>
+          <figure data-cat="daywear"><img src="assets/image1.jpg" alt="Wide brim with blazer"><figcaption>Modern Wide Brim</figcaption></figure>
         </div>
       </div>
     </section>
@@ -103,81 +102,5 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-
-<!-- Firebase for dynamic gallery -->
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore-compat.js"></script>
-<script>
-const firebaseConfigGallery = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-try { firebase.app(); } catch(e) { firebase.initializeApp(firebaseConfigGallery); }
-const db = firebase.firestore();
-
-(function(){
-  const grid = document.getElementById('grid');
-  const filters = document.getElementById('filters');
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightboxImg');
-  const lbCap = document.getElementById('lightboxCap');
-  const lbClose = document.querySelector('.lightbox-close');
-
-  function renderFilters(tagsSet){
-    filters.innerHTML = '';
-    const allBtn = document.createElement('button');
-    allBtn.className = 'btn primary'; allBtn.dataset.filter = 'all'; allBtn.textContent = 'All';
-    filters.appendChild(allBtn);
-    [...tagsSet].sort().forEach(tag => {
-      const b = document.createElement('button');
-      b.className = 'btn'; b.dataset.filter = tag; b.textContent = tag;
-      filters.appendChild(b);
-    });
-    filters.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cat = btn.dataset.filter;
-        grid.querySelectorAll('figure').forEach(fig => {
-          const t = (fig.dataset.tags || '').split(',').map(s=>s.trim()).filter(Boolean);
-          fig.style.display = (cat === 'all' || t.includes(cat)) ? '' : 'none';
-        });
-        filters.querySelectorAll('button').forEach(b=>b.classList.remove('primary'));
-        btn.classList.add('primary');
-      });
-    });
-  }
-
-  function attachLightbox(fig, url, cap){
-    fig.addEventListener('click', () => {
-      lbImg.src = url; lbImg.alt = cap || '';
-      lbCap.textContent = cap || '';
-      lightbox.classList.remove('hidden');
-    });
-  }
-  lbClose?.addEventListener('click', ()=> lightbox.classList.add('hidden'));
-  lightbox?.addEventListener('click', (e)=>{ if(e.target===lightbox) lightbox.classList.add('hidden'); });
-
-  db.collection('gallery').orderBy('createdAt','desc').onSnapshot(snap => {
-    const docs = snap.docs.map(d => d.data());
-    const tagSet = new Set();
-    grid.innerHTML = '';
-    docs.forEach(d => {
-      const cap = d.caption || '';
-      const tags = (d.tags || []).map(t=>String(t).trim()).filter(Boolean);
-      tags.forEach(t => tagSet.add(t));
-      const fig = document.createElement('figure');
-      fig.dataset.tags = tags.join(', ');
-      fig.innerHTML = `<img src="${d.url}" alt="${cap}"><figcaption>${cap}</figcaption>`;
-      grid.appendChild(fig);
-      attachLightbox(fig, d.url, cap);
-    });
-    renderFilters(tagSet);
-  });
-})();
-</script>
-
 </body>
 </html>

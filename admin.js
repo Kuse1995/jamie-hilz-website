@@ -1,127 +1,249 @@
-// Auth UI
-const uploaderCard = document.getElementById('uploaderCard');
-const listCard = document.getElementById('listCard');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const loginBtn = document.getElementById('loginBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const authMsg = document.getElementById('authMsg');
+/*
+ * Admin dashboard logic
+ *
+ * Handles authentication via Firebase Auth, image uploads to Storage,
+ * CRUD operations on Firestore documents, and a simple UI for
+ * managing gallery items (edit captions/tags and delete entries).
+ */
+(function () {
+  // Ensure Firebase has been initialized (see admin.html for config)
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
 
-loginBtn?.addEventListener('click', async () => {
-  authMsg.textContent = 'Signing in...';
-  try {
-    await auth.signInWithEmailAndPassword(email.value, password.value);
-  } catch (e) {
-    authMsg.textContent = e.message;
+  // Login elements
+  const loginForm = document.getElementById('loginForm');
+  const loginEmail = document.getElementById('loginEmail');
+  const loginPassword = document.getElementById('loginPassword');
+  const loginStatus = document.getElementById('loginStatus');
+  // Panels
+  const loginPanel = document.getElementById('admin-login');
+  const dashboardPanel = document.getElementById('admin-dashboard');
+  // Upload form elements
+  const uploadInput = document.getElementById('uploadInput');
+  const uploadCaption = document.getElementById('uploadCaption');
+  const uploadTags = document.getElementById('uploadTags');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const uploadStatus = document.getElementById('uploadStatus');
+  // Gallery list
+  const galleryItems = document.getElementById('galleryItems');
+  // Logout button
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  /**
+   * Listen for login form submissions. Attempts to sign in the user with
+   * email/password. Displays errors if sign‑in fails.
+   */
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginStatus.textContent = '';
+      const email = loginEmail.value.trim();
+      const pwd = loginPassword.value;
+      if (!email || !pwd) {
+        loginStatus.textContent = 'Please enter your email and password.';
+        return;
+      }
+      loginStatus.textContent = 'Signing in…';
+      auth
+        .signInWithEmailAndPassword(email, pwd)
+        .then(() => {
+          loginForm.reset();
+          loginStatus.textContent = '';
+        })
+        .catch((err) => {
+          loginStatus.textContent = err.message;
+        });
+    });
   }
-});
 
-logoutBtn?.addEventListener('click', async () => {
-  await auth.signOut();
-});
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    authMsg.textContent = `Signed in as ${user.email}`;
-    loginBtn.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
-    uploaderCard.classList.remove('hidden');
-    listCard.classList.remove('hidden');
-    loadItems();
-  } else {
-    authMsg.textContent = '';
-    loginBtn.style.display = 'inline-block';
-    logoutBtn.style.display = 'none';
-    uploaderCard.classList.add('hidden');
-    listCard.classList.add('hidden');
-  }
-});
-
-// Uploader
-const adminDrop = document.getElementById('adminDrop');
-const pickFiles = document.getElementById('pickFiles');
-const filesInput = document.getElementById('files');
-const preview = document.getElementById('preview');
-const uploadBtn = document.getElementById('uploadBtn');
-const uploadMsg = document.getElementById('uploadMsg');
-
-const preventDefaults = e => { e.preventDefault(); e.stopPropagation(); };
-['dragenter','dragover','dragleave','drop'].forEach(ev => adminDrop?.addEventListener(ev, preventDefaults));
-adminDrop?.addEventListener('dragover', () => adminDrop.style.background = '#fff');
-adminDrop?.addEventListener('dragleave', () => adminDrop.style.background = '#fafafa');
-adminDrop?.addEventListener('drop', (e) => { adminDrop.style.background = '#fafafa'; filesInput.files = e.dataTransfer.files; renderPreview(); });
-
-pickFiles?.addEventListener('click', () => filesInput.click());
-filesInput?.addEventListener('change', renderPreview);
-
-function renderPreview() {
-  preview.innerHTML = '';
-  [...filesInput.files].forEach(f => {
-    if (!f.type.startsWith('image/')) return;
-    const img = document.createElement('img');
-    img.className = 'thumb-sm';
-    const r = new FileReader();
-    r.onload = e => img.src = e.target.result;
-    r.readAsDataURL(f);
-    preview.appendChild(img);
-  });
-}
-
-uploadBtn?.addEventListener('click', async () => {
-  const files = [...(filesInput.files || [])];
-  if (!files.length) { uploadMsg.textContent = 'Please choose at least one image.'; return; }
-  uploadMsg.textContent = 'Uploading...';
-  const cap = document.getElementById('caption').value.trim();
-  const tags = document.getElementById('tags').value.split(',').map(t => t.trim()).filter(Boolean);
-
-  try {
-    for (const file of files) {
-      const path = `gallery/${Date.now()}-${file.name}`;
-      const snap = await storage.ref(path).put(file);
-      const url = await snap.ref.getDownloadURL();
-      await db.collection('gallery').add({
-        url, caption: cap || file.name, tags, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+  /**
+   * Observe auth state changes to toggle UI. When a user is logged in,
+   * show the dashboard and load gallery items. Otherwise, show the login form.
+   */
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      loginPanel.classList.add('hidden');
+      dashboardPanel.classList.remove('hidden');
+      loadGallery();
+    } else {
+      dashboardPanel.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+      galleryItems.innerHTML = '';
     }
-    filesInput.value = '';
-    preview.innerHTML = '';
-    document.getElementById('caption').value = '';
-    document.getElementById('tags').value = '';
-    uploadMsg.textContent = 'Upload complete.';
-    loadItems();
-  } catch (e) {
-    uploadMsg.textContent = e.message;
-  }
-});
-
-// List / Edit / Delete
-async function loadItems() {
-  const tbody = document.getElementById('itemsBody');
-  tbody.innerHTML = '<tr><td colspan="4" class="muted">Loading…</td></tr>';
-  const snap = await db.collection('gallery').orderBy('createdAt', 'desc').get();
-  tbody.innerHTML = '';
-  snap.forEach(doc => {
-    const d = doc.data();
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><img class="thumb-sm" src="${d.url}" alt=""></td>
-      <td><input class="input" value="${d.caption || ''}" data-field="caption"></td>
-      <td><input class="input" value="${(d.tags || []).join(', ')}" data-field="tags"></td>
-      <td>
-        <button class="btn primary" data-action="save">Save</button>
-        <button class="btn" data-action="delete">Delete</button>
-      </td>`;
-    tr.querySelector('[data-action="save"]').addEventListener('click', async () => {
-      const caption = tr.querySelector('[data-field="caption"]').value.trim();
-      const tags = tr.querySelector('[data-field="tags"]').value.split(',').map(t => t.trim()).filter(Boolean);
-      await db.collection('gallery').doc(doc.id).update({ caption, tags });
-      alert('Saved.');
-    });
-    tr.querySelector('[data-action="delete"]').addEventListener('click', async () => {
-      if (!confirm('Delete this image?')) return;
-      await db.collection('gallery').doc(doc.id).delete();
-      tr.remove();
-    });
-    tbody.appendChild(tr);
   });
-}
+
+  /**
+   * Log out the current user.
+   */
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut();
+    });
+  }
+
+  /**
+   * Upload selected files to Firebase Storage and add entries to Firestore.
+   * Allows multiple files; after each upload, it creates a Firestore document
+   * with the download URL, caption, tags and timestamp.
+   */
+  if (uploadBtn) {
+    uploadBtn.addEventListener('click', () => {
+      if (!uploadInput.files || uploadInput.files.length === 0) {
+        uploadStatus.textContent = 'Please select image(s) to upload.';
+        return;
+      }
+      uploadStatus.textContent = 'Uploading…';
+      const caption = uploadCaption.value.trim();
+      const tags = uploadTags.value
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => t);
+      const tasks = [];
+      Array.from(uploadInput.files).forEach((file) => {
+        const filename = Date.now() + '-' + file.name;
+        const storageRef = storage.ref().child('gallery/' + filename);
+        const uploadTask = storageRef
+          .put(file)
+          .then((snapshot) => snapshot.ref.getDownloadURL())
+          .then((url) => {
+            return db.collection('gallery').add({
+              url: url,
+              caption: caption,
+              tags: tags,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+          });
+        tasks.push(uploadTask);
+      });
+      Promise.all(tasks)
+        .then(() => {
+          uploadStatus.textContent = 'Upload complete.';
+          uploadInput.value = '';
+          uploadCaption.value = '';
+          uploadTags.value = '';
+          loadGallery();
+          setTimeout(() => {
+            uploadStatus.textContent = '';
+          }, 3000);
+        })
+        .catch((err) => {
+          uploadStatus.textContent = err.message;
+        });
+    });
+  }
+
+  /**
+   * Fetch gallery documents from Firestore and render them into the dashboard.
+   */
+  function loadGallery() {
+    galleryItems.innerHTML = 'Loading…';
+    db.collection('gallery')
+      .orderBy('createdAt', 'desc')
+      .get()
+      .then((snapshot) => {
+        galleryItems.innerHTML = '';
+        if (snapshot.empty) {
+          galleryItems.textContent = 'No images uploaded yet.';
+          return;
+        }
+        snapshot.forEach((doc) => {
+          renderItem(doc);
+        });
+      })
+      .catch((err) => {
+        galleryItems.textContent = 'Error loading items: ' + err.message;
+      });
+  }
+
+  /**
+   * Render a single gallery item with editable caption and tags plus delete option.
+   * @param {firebase.firestore.QueryDocumentSnapshot} doc
+   */
+  function renderItem(doc) {
+    const data = doc.data();
+    const wrapper = document.createElement('div');
+    wrapper.className = 'admin-item';
+    // Image preview
+    const img = document.createElement('img');
+    img.src = data.url;
+    img.alt = data.caption || '';
+    // Controls container
+    const controls = document.createElement('div');
+    controls.style.flex = '1';
+    // Caption field
+    const captionLabel = document.createElement('label');
+    captionLabel.textContent = 'Caption';
+    const captionInput = document.createElement('input');
+    captionInput.type = 'text';
+    captionInput.value = data.caption || '';
+    captionLabel.appendChild(captionInput);
+    // Tags field
+    const tagsLabel = document.createElement('label');
+    tagsLabel.textContent = 'Tags';
+    const tagsInput = document.createElement('input');
+    tagsInput.type = 'text';
+    tagsInput.value = (data.tags || []).join(', ');
+    tagsLabel.appendChild(tagsInput);
+    // Action buttons
+    const buttonRow = document.createElement('div');
+    buttonRow.className = 'cta-row';
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'btn primary';
+    saveBtn.textContent = 'Save';
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'btn ghost';
+    deleteBtn.textContent = 'Delete';
+    buttonRow.appendChild(saveBtn);
+    buttonRow.appendChild(deleteBtn);
+    // Assemble controls
+    controls.appendChild(captionLabel);
+    controls.appendChild(tagsLabel);
+    controls.appendChild(buttonRow);
+    // Add to wrapper
+    wrapper.appendChild(img);
+    wrapper.appendChild(controls);
+    // Append to list
+    galleryItems.appendChild(wrapper);
+    // Save handler
+    saveBtn.addEventListener('click', () => {
+      const newCap = captionInput.value.trim();
+      const newTags = tagsInput.value
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => t);
+      db.collection('gallery')
+        .doc(doc.id)
+        .update({ caption: newCap, tags: newTags })
+        .then(() => {
+          saveBtn.textContent = 'Saved';
+          setTimeout(() => {
+            saveBtn.textContent = 'Save';
+          }, 2000);
+        })
+        .catch((err) => {
+          saveBtn.textContent = err.message;
+        });
+    });
+    // Delete handler
+    deleteBtn.addEventListener('click', () => {
+      if (!confirm('Delete this item? This cannot be undone.')) return;
+      // Delete image from storage
+      if (data.url) {
+        try {
+          const fileRef = storage.refFromURL(data.url);
+          fileRef.delete().catch(() => {});
+        } catch (err) {
+          // ignore if refFromURL fails (e.g., unsupported URL)
+        }
+      }
+      // Delete Firestore document
+      db.collection('gallery')
+        .doc(doc.id)
+        .delete()
+        .then(() => {
+          wrapper.remove();
+        });
+    });
+  }
+})();

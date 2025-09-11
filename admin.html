@@ -3,89 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin — Gallery Manager</title>
+  <title>Admin — Jamie Hilz Hats &amp; Things</title>
+  <!-- Use the same stylesheet and fonts as the main site for cohesion -->
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .admin-wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
-    .admin-card { background:#fff; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.06); padding:16px; margin-bottom:16px; }
-    .row { display:flex; gap:12px; flex-wrap:wrap; }
-    .row > * { flex: 1 1 260px; }
-    .table { width:100%; border-collapse: collapse; }
-    .table th, .table td { padding:10px; border-bottom:1px solid #eee; vertical-align: top; }
-    .thumb-sm { width:80px; height:80px; object-fit:cover; border-radius:8px; }
-    .muted { color:#666 }
-    .hidden { display:none }
-    .input { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #ddd; background:#fafafa; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main class="admin-wrap">
-    <h1>Admin — Gallery Manager</h1>
-    <section id="authCard" class="admin-card">
-      <h2>Log In</h2>
-      <div class="row">
-        <label>Email<input class="input" id="email" type="email" placeholder="admin@example.com"></label>
-        <label>Password<input class="input" id="password" type="password" placeholder="••••••••"></label>
-      </div>
-      <div style="margin-top:10px">
-        <button class="btn primary" id="loginBtn">Log in</button>
-        <button class="btn" id="logoutBtn" style="display:none">Log out</button>
-      </div>
-      <p id="authMsg" class="muted" style="margin-top:8px"></p>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html#home">Jamie <span>Hilz</span> Hats &amp; Things</a>
+    </nav>
+  </header>
+  <main class="container" style="padding-top:40px;padding-bottom:80px">
+    <!-- Login panel -->
+    <section id="admin-login">
+      <h2>Admin Login</h2>
+      <form id="loginForm" class="order-form" novalidate>
+        <label>Email
+          <input type="email" id="loginEmail" required placeholder="admin@example.com" />
+        </label>
+        <label>Password
+          <input type="password" id="loginPassword" required placeholder="Your password" />
+        </label>
+        <div class="cta-row">
+          <button class="btn primary" type="submit">Log&nbsp;In</button>
+        </div>
+        <p id="loginStatus" class="error" style="min-height:20px"></p>
+      </form>
     </section>
-
-    <section id="uploaderCard" class="admin-card hidden">
-      <h2>Upload New Images</h2>
-      <div class="row">
-        <label>Caption/Title<input class="input" id="caption" placeholder="e.g., Bridal Hatinator"></label>
-        <label>Tags (comma-separated)<input class="input" id="tags" placeholder="bridal, veil, ivory"></label>
+    <!-- Dashboard panel -->
+    <section id="admin-dashboard" class="hidden">
+      <div class="section-head">
+        <h2>Gallery Manager</h2>
+        <p>Upload new images and update captions or tags for existing entries.</p>
       </div>
-      <div class="uploader" id="adminDrop">
-        <input type="file" id="files" accept="image/*" multiple hidden />
-        <p><strong>Drag & drop</strong> images here, or <button class="linklike" type="button" id="pickFiles">browse</button>.</p>
-        <div id="preview" class="thumbs"></div>
+      <div class="cta-row" style="justify-content:flex-end;margin-bottom:16px">
+        <button id="logoutBtn" class="btn ghost" type="button">Log&nbsp;Out</button>
       </div>
-      <div>
-        <button class="btn primary" id="uploadBtn">Upload</button>
+      <!-- Upload form -->
+      <div class="order-form" style="margin-bottom:32px">
+        <label>Upload Images
+          <input type="file" id="uploadInput" accept="image/*" multiple />
+        </label>
+        <label>Caption
+          <input type="text" id="uploadCaption" placeholder="Caption (optional)" />
+        </label>
+        <label>Tags (comma separated)
+          <input type="text" id="uploadTags" placeholder="e.g., bridal, veil" />
+        </label>
+        <div class="cta-row">
+          <button id="uploadBtn" class="btn primary" type="button">Upload</button>
+        </div>
+        <p id="uploadStatus" class="error" style="min-height:20px"></p>
       </div>
-      <p id="uploadMsg" class="muted"></p>
-    </section>
-
-    <section id="listCard" class="admin-card hidden">
-      <h2>Gallery Items</h2>
-      <table class="table" id="itemsTable">
-        <thead><tr><th>Preview</th><th>Caption</th><th>Tags</th><th>Actions</th></tr></thead>
-        <tbody id="itemsBody"></tbody>
-      </table>
+      <h3 style="margin-top:0;margin-bottom:12px">Existing Items</h3>
+      <div id="galleryItems" class="admin-items"></div>
     </section>
   </main>
-
-  
-<!-- Firebase SDKs (Compat builds) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
-<script>
-// TODO: Replace with your Firebase config
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA2J5lgYTdIGG0zNCKKD0qaCbbwS4g1nzs",
-  authDomain: "jamiehilz.firebaseapp.com",
-  projectId: "jamiehilz",
-  storageBucket: "jamiehilz.firebasestorage.app",
-  messagingSenderId: "780433394142",
-  appId: "1:780433394142:web:6144643b652d1901a5b54f",
-  measurementId: "G-VE449G4R66"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  <!-- Firebase libs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-storage-compat.js"></script>
+  <!-- Project configuration: replace with your Firebase project values -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // Initialize Firebase only if no instance exists
+    try { firebase.app(); } catch (e) { firebase.initializeApp(firebaseConfig); }
+  </script>
+  <script src="admin.js"></script>
+</body>
+</html>

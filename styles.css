@@ -211,3 +211,42 @@ blockquote span{display:block;margin-top:10px;color:#666;font-style:normal}
 /* Lightbox cap */
 .lightbox img { max-width: 90vw; max-height: 76vh; }
 
+/* ------------------------------------------------------------- */
+/* Admin dashboard styles                                        */
+/* These rules ensure the admin page looks tidy and consistent   */
+/* with the rest of the site.                                    */
+.admin-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+.admin-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.admin-item label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.admin-item input {
+  margin-top: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  font: inherit;
+  width: 100%;
+}
+/* Style ghost buttons in the admin area to match the theme */
+.admin-items .btn.ghost {
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+

@@ -70,42 +70,59 @@
       messagingSenderId: "YOUR_SENDER_ID",
       appId: "YOUR_APP_ID"
     };
+    // Initialise Firebase only if not already created
     try { firebase.app(); } catch (e) { firebase.initializeApp(firebaseConfigGallery); }
     const db = firebase.firestore();
+
+    // DOM references
     const grid = document.getElementById('grid');
     const filtersContainer = document.querySelector('.filters');
     const lightboxElem = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbCap = document.getElementById('lightboxCap');
     const lbClose = document.querySelector('.lightbox-close');
-    // Lightbox close handlers
+    // Close lightbox handlers
     lbClose.addEventListener('click', () => lightboxElem.classList.add('hidden'));
     lightboxElem.addEventListener('click', (e) => {
       if (e.target === lightboxElem) lightboxElem.classList.add('hidden');
     });
+
+    // Fallback static gallery items (shown immediately on page load)
+    const defaultStatic = [
+      { url: 'assets/image2.jpg', caption: 'Monochrome Minimal', tags: ['daywear'] },
+      { url: 'assets/image3.jpg', caption: 'Bridal Hatinator', tags: ['bridal'] },
+      { url: 'assets/image4.jpg', caption: 'Race Day Statement', tags: ['race'] },
+      { url: 'assets/image5.jpg', caption: 'Polka-Dot Ensemble', tags: ['couture'] },
+      { url: 'assets/image6.jpg', caption: 'Classic Daywear', tags: ['daywear'] },
+      { url: 'assets/image7.jpg', caption: 'Social Chic', tags: ['daywear'] },
+      { url: 'assets/image8.jpg', caption: 'Colour Pop Duo', tags: ['daywear'] },
+      { url: 'assets/image9.jpg', caption: 'Architectural Accent', tags: ['couture'] },
+      { url: 'assets/image1.jpg', caption: 'Modern Wide Brim', tags: ['daywear'] }
+    ];
+
     // Build filter buttons and assign click behaviour
     function renderFilters(tagsSet) {
       filtersContainer.innerHTML = '';
-      // All button
+      // Always start with an "All" button
       const allBtn = document.createElement('button');
       allBtn.className = 'btn primary';
       allBtn.textContent = 'All';
       allBtn.dataset.filter = 'all';
       filtersContainer.appendChild(allBtn);
-      // Individual tag buttons
-      tagsSet.forEach((tag) => {
+      // Create a button per tag, sorted alphabetically
+      [...tagsSet].sort().forEach((tag) => {
         const btn = document.createElement('button');
         btn.className = 'btn';
         btn.textContent = tag;
         btn.dataset.filter = tag;
         filtersContainer.appendChild(btn);
       });
-      // Click handling
+      // Hook up click behaviour
       filtersContainer.querySelectorAll('button').forEach((btn) => {
         btn.addEventListener('click', () => {
           const filter = btn.dataset.filter;
           grid.querySelectorAll('figure').forEach((fig) => {
-            const tags = fig.dataset.tags ? fig.dataset.tags.split(',') : [];
+            const tags = (fig.dataset.tags || '').split(',').map((t) => t.trim()).filter(Boolean);
             fig.style.display = filter === 'all' || tags.includes(filter) ? '' : 'none';
           });
           filtersContainer.querySelectorAll('button').forEach((b) => b.classList.remove('primary'));
@@ -113,42 +130,50 @@
         });
       });
     }
-    // Listen to Firestore for gallery documents and render them
-    function loadGallery() {
-      db.collection('gallery')
-        .orderBy('createdAt', 'desc')
-        .onSnapshot((snapshot) => {
-          grid.innerHTML = '';
-          const tagsSet = new Set();
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            const fig = document.createElement('figure');
-            fig.className = 'card';
-            const tags = data.tags || [];
-            fig.dataset.tags = tags.join(',');
-            const img = document.createElement('img');
-            img.src = data.url;
-            img.alt = data.caption || '';
-            const cap = document.createElement('figcaption');
-            cap.textContent = data.caption || '';
-            fig.appendChild(img);
-            fig.appendChild(cap);
-            grid.appendChild(fig);
-            tags.forEach((t) => tagsSet.add(t));
-            // Lightbox open
-            fig.addEventListener('click', () => {
-              lbImg.src = img.src;
-              lbImg.alt = img.alt;
-              lbCap.textContent = cap.textContent;
-              lightboxElem.classList.remove('hidden');
-            });
-          });
-          renderFilters(tagsSet);
+
+    // Render a list of items (array of objects with url, caption, tags)
+    function renderList(list) {
+      const tagsSet = new Set();
+      grid.innerHTML = '';
+      list.forEach((item) => {
+        const fig = document.createElement('figure');
+        fig.className = 'card';
+        fig.dataset.tags = (item.tags || []).join(', ');
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = item.url;
+        img.alt = item.caption || '';
+        const cap = document.createElement('figcaption');
+        cap.textContent = item.caption || '';
+        fig.appendChild(img);
+        fig.appendChild(cap);
+        grid.appendChild(fig);
+        (item.tags || []).forEach((t) => tagsSet.add(t));
+        // Lightbox open
+        fig.addEventListener('click', () => {
+          lbImg.src = img.src;
+          lbImg.alt = img.alt;
+          lbCap.textContent = cap.textContent;
+          lightboxElem.classList.remove('hidden');
         });
+      });
+      renderFilters(tagsSet);
     }
-    // Set current year and load gallery
+
+    // Initially render the fallback static gallery
+    renderList(defaultStatic);
+
+    // Then overlay Firestore items when available
+    db.collection('gallery')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot((snapshot) => {
+        const docs = snapshot.docs.map((doc) => doc.data()).filter((d) => d && d.url);
+        if (docs.length > 0) {
+          renderList(docs);
+        }
+      });
+    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
-    loadGallery();
   </script>
 </body>
 </html>
